@@ -8,7 +8,7 @@ data = pd.read_csv('bookings_per_year_month_day_season.csv')
 
 # convert categorical variables to numerical format
 data['month'] = pd.to_datetime(data['month'], format='%B').dt.month
-data['season'] = data['season'].map({'Spring': 0, 'Summer': 1, 'Autumn': 2, 'Winter': 3})
+data['season'] = data['season'].map({'Spring': 0, 'Summer': 1, 'Fall': 2, 'Winter': 3})
 
 # extract additional features from date columns
 data['day_of_week'] = pd.to_datetime(data[['year', 'month', 'day']]).dt.dayofweek
