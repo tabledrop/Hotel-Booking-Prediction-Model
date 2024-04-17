@@ -26,21 +26,14 @@ y = data['bookings']
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-from sklearn.impute import SimpleImputer
-
-# handle missing values in dataset
-imputer = SimpleImputer(strategy='mean')
-X_train_imputed = imputer.fit_transform(X_train)
-X_test_imputed = imputer.transform(X_test)
-
 # linear regression
 model = CatBoostClassifier(iterations=100)
 
 # training time
-model.fit(X_train_imputed, y_train)
+model.fit(X_train, y_train)
 
 # make predictions
-y_pred = model.predict(X_test_imputed)
+y_pred = model.predict(X_test)
 
 # evaluate model
 mse = mean_squared_error(y_test, y_pred)
@@ -67,10 +60,9 @@ desired_date_features = pd.DataFrame({
     'year': [2018],
     'month': 1,
     'day': [1],
-    'season': [0],
+    'season': [3],
     'day_of_week': 0      
 })
-desired_date_features_imputed = imputer.transform(desired_date_features)
-predicted_bookings = model.predict(desired_date_features_imputed)
+predicted_bookings = model.predict(desired_date_features)
 
 print("Predicted number of bookings:", predicted_bookings[0])
