@@ -1,4 +1,5 @@
 import pandas as pd
+from catboost import CatBoostClassifier
 
 data = pd.read_csv('bookings_per_year_month_day_season.csv')
 
@@ -33,7 +34,7 @@ X_train_imputed = imputer.fit_transform(X_train)
 X_test_imputed = imputer.transform(X_test)
 
 # linear regression
-model = LinearRegression()
+model = CatBoostClassifier(iterations=100)
 
 # training time
 model.fit(X_train_imputed, y_train)
@@ -63,10 +64,10 @@ print("R-squared:", r2)
 #
 
 desired_date_features = pd.DataFrame({
-    'year': [2018],      
+    'year': [2018],
     'month': 1,
-    'day': [1],          
-    'season': [0],        
+    'day': [1],
+    'season': [0],
     'day_of_week': 0      
 })
 desired_date_features_imputed = imputer.transform(desired_date_features)
